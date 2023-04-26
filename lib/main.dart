@@ -126,7 +126,7 @@ class GradeCalculate{
     else if(grade<70.0 && grade>=60.0) _letters='D';
     else if(grade<60.0 && grade>=0.0) _letters='F';
     else if(grade<0.0 && grade>100.0) 'Grade must be between 0-100';
-    else return 'Invalid Input';
+    else return 'Invalid Input, please try again';
     return '$name has $_letters letter grade';
   }
 }
