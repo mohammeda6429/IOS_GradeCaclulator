@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const GradeCalculator());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class GradeCalculator extends StatelessWidget {
+  const GradeCalculator({super.key});
 
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Grade Calculator',
+      title: 'Mohammed Amin',
       theme: ThemeData(
         // This is the theme of your application.
         //
@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(title: 'Mohammed Amin - IOS Calculus'),
+      home: const MyHomePage(title: 'Mohammed Amin - GradeCalculator'),
     );
   }
 }
@@ -48,16 +48,21 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
+  String t1='', t2='', result=''; double num2=0.0;
+  GradeCalculate g=GradeCalculate();
+
 
   void _incrementCounter() {
     setState(() {
+      if(t1=='') result='Enter your name please';
+      result=g.getLetterGrade(name:t1, grade: num2);
+      print('hi');
       // This call to setState tells the Flutter framework that something has
       // changed in this State, which causes it to rerun the build method below
       // so that the display can reflect the updated values. If we changed
       // _counter without calling setState(), then the build method would not be
       // called again, and so nothing would appear to happen.
-      _counter++;
+
     });
   }
 
@@ -78,34 +83,50 @@ class _MyHomePageState extends State<MyHomePage> {
       body: Center(
         // Center is a layout widget. It takes a single child and positions it
         // in the middle of the parent.
-        child: Column( mainAxisAlignment: MainAxisAlignment.center,
+        child: Column(
           children: [
-            Text('hello', style: TextStyle(fontSize: 33),),
-            Container(width: 233,
-              child: TextField(decoration:  InputDecoration(labelText: 'Enter your name',
-              border: OutlineInputBorder()),
-              onChanged: (text){
-                print(text);
-              }),
+            Padding(
+              padding: const EdgeInsets.all(18.0),
+              child: Text(result,style: TextStyle(fontSize: 22),),
             ),
-            Container(width: 233,
-              child: TextField(keyboardType: TextInputType.number,
-                  decoration: InputDecoration(labelText: 'Enter your grade',
-                  border: OutlineInputBorder()),
-                onChanged: (text){
-                    print(text);
+            Row(children: [
+              Container(width: 150,
+                child: TextField(decoration: InputDecoration(
+                    labelText: 'Input Your Name', border: OutlineInputBorder()),
+                  onChanged: (text){
+                    t1=text;
                   },),
-            ),
-            Container(width: 77, height: 33,
-            child: Text('Convert'),color: Colors.green,)
+              ),
+              Container(width: 150,
+                child: TextField(keyboardType:TextInputType.number, decoration: InputDecoration(
+                    labelText: 'Input Your Grade', border: OutlineInputBorder()),
+                  onChanged: (text){
+                    t2=text;
+                    num2=double.parse(t2);
+                  },),
+              ),
+              Container(width: 60,height:59, child: RawMaterialButton(  onPressed: () {
+                _incrementCounter();
+              },child: Text('Convert')),color: Colors.green ,)
+            ],)
           ],
+
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
     );
+  }
+}
+class GradeCalculate{
+  double grade=0.0; String name='', _letters='';
+  GradeCalculate({this.grade=0.0, this.name=''});
+  String getLetterGrade({name,grade}){
+    if(grade<=100.0 && grade>=90.0) _letters='A';
+    else if(grade<90.0 && grade>=80.0) _letters='B';
+    else if(grade<80.0 && grade>=70.0) _letters='C';
+    else if(grade<70.0 && grade>=60.0) _letters='D';
+    else if(grade<60.0 && grade>=0.0) _letters='F';
+    else if(grade<0.0 && grade>100.0) 'Grade must be between 0-100';
+    else return 'Invalid Input';
+    return '$name has $_letters letter grade';
   }
 }
